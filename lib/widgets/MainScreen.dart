@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_test/Screen/UserScreen/dashboard_screen.dart';
+import 'package:geo_test/Screen/UserScreen/inventory.dart';
 import 'package:geo_test/Screen/UserScreen/machines_screen.dart';
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
@@ -16,11 +17,11 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    const DashboardBody(),                     // Index 0: Dashboard
+    const DashboardBody(), // Index 0: Dashboard
     const Center(child: Text('Reports Page')), // Index 1: Reports
-    const MachinesScreen(),                    // Index 2: Machines
-    const Center(child: Text('Inventory Page')), // Index 3: Inventory
-    const Center(child: Text('Profile Page')),   // Index 4: Profile
+    const MachinesScreen(), // Index 2: Machines
+    const InventoryScreen(), // Index 3: Inventory
+    const Center(child: Text('Profile Page')), // Index 4: Profile
   ];
 
   void _onItemTapped(int index) {
@@ -35,9 +36,7 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: Colors.white,
       appBar: const TopNavBar(),
       drawer: const AppDrawer(),
-      body: SafeArea(
-        child: _pages[_selectedIndex],
-      ),
+      body: SafeArea(child: _pages[_selectedIndex]),
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
