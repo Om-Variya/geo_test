@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/AuthScreen/registration.dart';
 import 'package:geo_test/Screen/UserScreen/dashboard_screen.dart';
 import 'package:geo_test/widgets/MainScreen.dart';
 
@@ -290,6 +291,39 @@ class _LoginscreenState extends State<Loginscreen> {
                             ),
                           ),
 
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                "Don't have an account? ",
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Color(0xFF6B7280),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  // Navigates to the Registration Screen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegistrationScreen(),
+                                    ),
+                                  );
+                                },
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.blue.shade700,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           const Spacer(),
                           const SizedBox(height: 24),
 

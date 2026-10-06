@@ -19,10 +19,10 @@ class _MainScreenState extends State<MainScreen> {
   // List of screens for each bottom nav tab
   final List<Widget> _pages = [
     const DashboardBody(), // Index 0: Dashboard
-    const MachinesScreen(), // Index 1: Machines
     const Center(
-      child: Text('Machines Page'),
-    ), // Index 2: Replace with Machines body
+      child: Text('Reports Page'),
+    ), // Index 1: Replace with Reports body
+    const MachinesScreen(), // Index 2: Replace with Machines body
     const Center(
       child: Text('Inventory Page'),
     ), // Index 3: Replace with Inventory body
