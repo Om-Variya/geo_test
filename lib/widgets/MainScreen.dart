@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_test/Screen/UserScreen/dashboard_screen.dart';
+import 'package:geo_test/Screen/UserScreen/machines_screen.dart';
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart';
@@ -18,9 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   // List of screens for each bottom nav tab
   final List<Widget> _pages = [
     const DashboardBody(), // Index 0: Dashboard
-    const Center(
-      child: Text('Reports Page'),
-    ), // Index 1: Replace with Reports body
+    const MachinesScreen(), // Index 1: Machines
     const Center(
       child: Text('Machines Page'),
     ), // Index 2: Replace with Machines body
