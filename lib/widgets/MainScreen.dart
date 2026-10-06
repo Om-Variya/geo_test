@@ -4,6 +4,7 @@ import 'package:geo_test/Screen/UserScreen/machines_screen.dart';
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart';
+import 'package:geo_test/Screen/UserScreen/inventory.dart';
 // Ensure this imports your DashboardBody
 
 class MainScreen extends StatefulWidget {
@@ -23,9 +24,7 @@ class _MainScreenState extends State<MainScreen> {
     const Center(
       child: Text('Machines Page'),
     ), // Index 2: Replace with Machines body
-    const Center(
-      child: Text('Inventory Page'),
-    ), // Index 3: Replace with Inventory body
+    const InventoryScreen(), // Redirect to InventoryScreen
     const Center(
       child: Text('Profile Page'),
     ), // Index 4: Replace with Profile body
