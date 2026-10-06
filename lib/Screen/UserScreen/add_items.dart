@@ -1,35 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:geo_test/Screen/UserScreen/test_details.dart';
 
-class SiteDetailsScreen extends StatefulWidget {
-  const SiteDetailsScreen({super.key});
+class AddItemsScreen extends StatefulWidget {
+  const AddItemsScreen({super.key});
 
   @override
-  State<SiteDetailsScreen> createState() => _SiteDetailsScreenState();
+  State<AddItemsScreen> createState() => _AddItemsScreenState();
 }
 
-class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
-  // Controllers for date fields
-  final TextEditingController _sampleReceivedDateController =
-      TextEditingController();
+class _AddItemsScreenState extends State<AddItemsScreen> {
+  // ============================================================
+  // DATE CONTROLLER
+  // ============================================================
 
-  final TextEditingController _testDateController = TextEditingController();
+  final TextEditingController _purchaseDateController = TextEditingController();
 
   @override
   void dispose() {
-    _sampleReceivedDateController.dispose();
-    _testDateController.dispose();
+    _purchaseDateController.dispose();
     super.dispose();
   }
 
-  // ------------------------------------------------------------
-  // Date Picker
-  // ------------------------------------------------------------
+  // ============================================================
+  // DATE PICKER
+  // ============================================================
 
-  Future<void> _selectDate(
-    BuildContext context,
-    TextEditingController controller,
-  ) async {
+  Future<void> _selectPurchaseDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -51,26 +46,26 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
 
     if (pickedDate != null) {
       setState(() {
-        controller.text =
-            "${pickedDate.month.toString().padLeft(2, '0')}/"
+        _purchaseDateController.text =
             "${pickedDate.day.toString().padLeft(2, '0')}/"
+            "${pickedDate.month.toString().padLeft(2, '0')}/"
             "${pickedDate.year}";
       });
     }
   }
 
-  // ------------------------------------------------------------
-  // Main Build
-  // ------------------------------------------------------------
+  // ============================================================
+  // BUILD
+  // ============================================================
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
 
-      // ----------------------------------------------------------
-      // App Bar
-      // ----------------------------------------------------------
+      // ==========================================================
+      // APP BAR
+      // ==========================================================
       appBar: AppBar(
         backgroundColor: const Color(0xFF222222),
         elevation: 0,
@@ -81,7 +76,7 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
         ),
 
         title: const Text(
-          'Site Details',
+          'Add New Item',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -97,9 +92,9 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
         ],
       ),
 
-      // ----------------------------------------------------------
-      // Body
-      // ----------------------------------------------------------
+      // ==========================================================
+      // BODY
+      // ==========================================================
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24.0),
 
@@ -107,38 +102,27 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // ======================================================
-            // SITE IDENTITY
+            // ITEM INFORMATION
             // ======================================================
-            _buildSectionHeader('SITE IDENTITY'),
+            _buildSectionHeader('ITEM INFORMATION'),
 
             const SizedBox(height: 12),
 
             _buildTextField(
-              label: 'Client / Company Name',
-              hintText: 'e.g. ABC Construction Pvt. Ltd.',
+              label: 'Category',
+              hintText: 'e.g. Construction Material',
             ),
 
             const SizedBox(height: 16),
 
-            _buildTextField(
-              label: 'Project / Site Name',
-              hintText: 'e.g. Residential Building',
-            ),
-
-            const SizedBox(height: 16),
-
-            _buildTextField(
-              label: 'Site Address / Location',
-              hintText: 'e.g. Mavdi, Rajkot, Gujarat',
-              maxLines: 2,
-            ),
+            _buildTextField(label: 'Unit', hintText: 'e.g. Bag'),
 
             const SizedBox(height: 24),
 
             // ======================================================
-            // PROJECT DETAILS
+            // STOCK DETAILS
             // ======================================================
-            _buildSectionHeader('PROJECT DETAILS'),
+            _buildSectionHeader('STOCK DETAILS'),
 
             const SizedBox(height: 12),
 
@@ -146,61 +130,59 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
               children: [
                 Expanded(
                   child: _buildTextField(
-                    label: 'Work Order / Reference No.',
-                    hintText: 'e.g. WO-2026-118',
+                    label: 'Current Stock',
+                    hintText: 'e.g. 50',
+                    keyboardType: TextInputType.number,
                   ),
                 ),
 
                 const SizedBox(width: 16),
 
                 Expanded(
-                  child: _buildDatePickerField(
-                    label: 'Sample Received Date',
-                    hintText: 'mm/dd/yyyy',
-                    controller: _sampleReceivedDateController,
-                    onTap: () =>
-                        _selectDate(context, _sampleReceivedDateController),
+                  child: _buildTextField(
+                    label: 'Minimum Stock Level',
+                    hintText: 'e.g. 20',
+                    keyboardType: TextInputType.number,
                   ),
                 ),
               ],
             ),
 
+            const SizedBox(height: 24),
+
+            // ======================================================
+            // STORAGE & SUPPLIER
+            // ======================================================
+            _buildSectionHeader('STORAGE & SUPPLIER'),
+
+            const SizedBox(height: 12),
+
+            _buildTextField(
+              label: 'Storage Location',
+              hintText: 'e.g. Godown - A',
+            ),
+
             const SizedBox(height: 16),
+
+            _buildTextField(
+              label: 'Supplier',
+              hintText: 'e.g. UltraTech Cement',
+            ),
+
+            const SizedBox(height: 24),
+
+            // ======================================================
+            // PURCHASE DETAILS
+            // ======================================================
+            _buildSectionHeader('PURCHASE DETAILS'),
+
+            const SizedBox(height: 12),
 
             _buildDatePickerField(
-              label: 'Test Date',
-              hintText: 'mm/dd/yyyy',
-              controller: _testDateController,
-              onTap: () => _selectDate(context, _testDateController),
-            ),
-
-            const SizedBox(height: 24),
-
-            // ======================================================
-            // SITE PERSONNEL
-            // ======================================================
-            _buildSectionHeader('SITE PERSONNEL'),
-
-            const SizedBox(height: 12),
-
-            Row(
-              children: [
-                Expanded(
-                  child: _buildTextField(
-                    label: 'Engineer',
-                    hintText: 'e.g. Om Patel',
-                  ),
-                ),
-
-                const SizedBox(width: 16),
-
-                Expanded(
-                  child: _buildTextField(
-                    label: 'Site Contact Person',
-                    hintText: 'e.g. Mr. Rajesh',
-                  ),
-                ),
-              ],
+              label: 'Purchase Date',
+              hintText: 'dd/mm/yyyy',
+              controller: _purchaseDateController,
+              onTap: () => _selectPurchaseDate(context),
             ),
 
             const SizedBox(height: 24),
@@ -213,9 +195,8 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
             const SizedBox(height: 12),
 
             _buildTextField(
-              label: 'Remarks',
-              hintText:
-                  'Enter sample details, site observations, or other remarks...',
+              label: 'Notes',
+              hintText: 'e.g. Keep in dry place.',
               maxLines: 4,
             ),
 
@@ -230,12 +211,7 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
 
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TestDetailsScreen(),
-                    ),
-                  );
+                  Navigator.pop(context);
                 },
 
                 style: ElevatedButton.styleFrom(
@@ -248,7 +224,7 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
                 ),
 
                 child: const Text(
-                  'Confirm and Save Site',
+                  'Confirm and Save Item',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -290,13 +266,14 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
   }
 
   // ==============================================================
-  // NORMAL TEXT FIELD
+  // TEXT FIELD
   // ==============================================================
 
   Widget _buildTextField({
     required String label,
     required String hintText,
     int maxLines = 1,
+    TextInputType? keyboardType,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,6 +291,7 @@ class _SiteDetailsScreenState extends State<SiteDetailsScreen> {
 
         TextField(
           maxLines: maxLines,
+          keyboardType: keyboardType,
 
           decoration: InputDecoration(
             hintText: hintText,

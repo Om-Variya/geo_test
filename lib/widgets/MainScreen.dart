@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geo_test/Screen/UserScreen/dashboard_screen.dart';
 import 'package:geo_test/Screen/UserScreen/inventory.dart';
 import 'package:geo_test/Screen/UserScreen/machines_screen.dart';
+import 'package:geo_test/Screen/UserScreen/reports_screen.dart';
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart';
@@ -18,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _pages = [
     const DashboardBody(), // Index 0: Dashboard
-    const Center(child: Text('Reports Page')), // Index 1: Reports
+    const ReportsScreen(), // Index 1: Reports
     const MachinesScreen(), // Index 2: Machines
     const InventoryScreen(), // Index 3: Inventory
     const Center(child: Text('Profile Page')), // Index 4: Profile

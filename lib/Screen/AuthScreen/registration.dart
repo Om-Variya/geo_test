@@ -9,13 +9,17 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _formKey = GlobalKey<FormState>();
+
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
-  // Controllers to capture user input
+  // Controllers
   final TextEditingController _nameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
@@ -25,39 +29,27 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmPasswordController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // ============================================================
+      // WHITE BACKGROUND
+      // ============================================================
+
       backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: AppBar(
-          backgroundColor: const Color(0xFF222222),
-          elevation: 0,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: const Text(
-            'Login/Signup',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          centerTitle: false,
-        ),
-      ),
+
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
             return SingleChildScrollView(
               child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24.0,
@@ -69,25 +61,41 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const SizedBox(height: 20),
+                          // ==================================================
+                          // TOP SPACE
+                          // ==================================================
 
-                          // Logo Placeholder
+                          const SizedBox(height: 40),
+
+                          // ==================================================
+                          // GEOTEST LOGO
+                          // ==================================================
+
                           Container(
-                            width: 60,
-                            height: 60,
+                            width: 100,
+                            height: 100,
+                            padding: const EdgeInsets.all(12),
                             decoration: const BoxDecoration(
-                              color: Color(0xFF333333),
+                              color: Color.fromARGB(
+                                255,
+                                248,
+                                250,
+                                255,
+                              ),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(
-                              Icons.location_searching,
-                              color: Colors.white,
-                              size: 30,
+                            child: Image.asset(
+                              'lib/resources/images/GeoTest-logo.png',
+                              fit: BoxFit.contain,
                             ),
                           ),
-                          const SizedBox(height: 16),
 
-                          // Brand Text
+                          const SizedBox(height: 20),
+
+                          // ==================================================
+                          // BRAND NAME
+                          // ==================================================
+
                           const Text(
                             'GeoTest',
                             style: TextStyle(
@@ -96,7 +104,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               color: Color(0xFF1A1B25),
                             ),
                           ),
+
                           const SizedBox(height: 4),
+
+                          // ==================================================
+                          // BRAND SUBTITLE
+                          // ==================================================
+
                           const Text(
                             'Consultancy',
                             style: TextStyle(
@@ -106,9 +120,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 32),
+                          const SizedBox(height: 40),
 
-                          // Header Text
+                          // ==================================================
+                          // HEADER
+                          // ==================================================
+
                           const Text(
                             'Create Account',
                             style: TextStyle(
@@ -117,7 +134,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               color: Color(0xFF1A1B25),
                             ),
                           ),
+
                           const SizedBox(height: 8),
+
                           const Text(
                             'Sign up to get started',
                             style: TextStyle(
@@ -126,15 +145,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
 
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 32),
 
-                          // Full Name Field
+                          // ==================================================
+                          // FULL NAME
+                          // ==================================================
+
                           TextFormField(
                             controller: _nameController,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Please enter your full name';
                               }
+
                               return null;
                             },
                             decoration: _inputDecoration('Full Name'),
@@ -142,17 +165,26 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                           const SizedBox(height: 16),
 
-                          // Email Field
+                          // ==================================================
+                          // EMAIL
+                          // ==================================================
+
                           TextFormField(
                             controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.trim().isEmpty) {
                                 return 'Please enter your email';
                               }
-                              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+
+                              final emailRegex = RegExp(
+                                r'^[^@]+@[^@]+\.[^@]+',
+                              );
+
                               if (!emailRegex.hasMatch(value)) {
                                 return 'Please enter a valid email address';
                               }
+
                               return null;
                             },
                             decoration: _inputDecoration('Email Address'),
@@ -160,7 +192,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                           const SizedBox(height: 16),
 
-                          // Password Field
+                          // ==================================================
+                          // PASSWORD
+                          // ==================================================
+
                           TextFormField(
                             controller: _passwordController,
                             obscureText: _obscurePassword,
@@ -168,9 +203,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter a password';
                               }
+
                               if (value.length < 6) {
                                 return 'Password must be at least 6 characters long';
                               }
+
                               return null;
                             },
                             decoration: _passwordInputDecoration(
@@ -186,7 +223,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                           const SizedBox(height: 16),
 
-                          // Confirm Password Field
+                          // ==================================================
+                          // CONFIRM PASSWORD
+                          // ==================================================
+
                           TextFormField(
                             controller: _confirmPasswordController,
                             obscureText: _obscureConfirmPassword,
@@ -194,9 +234,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Please confirm your password';
                               }
+
                               if (value != _passwordController.text) {
                                 return 'Passwords do not match';
                               }
+
                               return null;
                             },
                             decoration: _passwordInputDecoration(
@@ -213,7 +255,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                           const SizedBox(height: 24),
 
-                          // Sign Up Button
+                          // ==================================================
+                          // SIGN UP BUTTON
+                          // ==================================================
+
                           SizedBox(
                             width: double.infinity,
                             height: 50,
@@ -227,9 +272,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     ),
                                   );
-                                  Navigator.pop(
-                                    context,
-                                  ); // Return to Login page after successful sign up
+
+                                  Navigator.pop(context);
                                 }
                               },
                               style: ElevatedButton.styleFrom(
@@ -250,10 +294,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ),
                           ),
 
+                          // ==================================================
+                          // PUSH FOOTER TO BOTTOM
+                          // ==================================================
+
                           const Spacer(),
+
                           const SizedBox(height: 24),
 
-                          // Footer
+                          // ==================================================
+                          // FOOTER
+                          // ==================================================
+
                           const Text(
                             '© 2026 GeoTest Consultancy',
                             style: TextStyle(
@@ -261,6 +313,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                               color: Color(0xFFB0B3C7),
                             ),
                           ),
+
                           const SizedBox(height: 16),
                         ],
                       ),
@@ -275,32 +328,60 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  // Reusable input decoration helper
+  // ================================================================
+  // NORMAL INPUT DECORATION
+  // ================================================================
+
   InputDecoration _inputDecoration(String hintText) {
     return InputDecoration(
       hintText: hintText,
-      hintStyle: const TextStyle(color: Color(0xFFB0B3C7), fontSize: 14),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      hintStyle: const TextStyle(
+        color: Color(0xFFB0B3C7),
+        fontSize: 14,
+      ),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 16,
+      ),
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Color(0xFFE5E7EB),
+        ),
       ),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Color(0xFFE5E7EB),
+        ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: Colors.blue.shade600, width: 2),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: Colors.blue.shade600,
+          width: 2,
+        ),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Colors.red),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Colors.red,
+        ),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Colors.red,
+          width: 2,
+        ),
       ),
     );
   }
 
-  // Password decoration helper with visibility toggle
+  // ================================================================
+  // PASSWORD INPUT DECORATION
+  // ================================================================
+
   InputDecoration _passwordInputDecoration(
     String hintText,
     bool obscure,
@@ -308,24 +389,58 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   ) {
     return InputDecoration(
       hintText: hintText,
-      hintStyle: const TextStyle(color: Color(0xFFB0B3C7), fontSize: 14),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+
+      hintStyle: const TextStyle(
+        color: Color(0xFFB0B3C7),
+        fontSize: 14,
+      ),
+
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 16,
+      ),
+
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Color(0xFFE5E7EB),
+        ),
       ),
+
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Color(0xFFE5E7EB)),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Color(0xFFE5E7EB),
+        ),
       ),
+
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: Colors.blue.shade600, width: 2),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: BorderSide(
+          color: Colors.blue.shade600,
+          width: 2,
+        ),
       ),
+
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.0),
-        borderSide: const BorderSide(color: Colors.red),
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Colors.red,
+        ),
       ),
+
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8),
+        borderSide: const BorderSide(
+          color: Colors.red,
+          width: 2,
+        ),
+      ),
+
+      // ============================================================
+      // PASSWORD VISIBILITY
+      // ============================================================
+
       suffixIcon: IconButton(
         icon: Icon(
           obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,

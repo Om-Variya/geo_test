@@ -7,184 +7,280 @@ class MachinesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Dummy machine data
+    final List<Map<String, dynamic>> machines = [
+      {
+        'name': 'Lathe Machine',
+        'code': 'ABC-020',
+        'status': 'Active',
+        'statusColor': Colors.green,
+        'bgColor': Colors.green.shade50,
+        'icon': Icons.precision_manufacturing,
+      },
+      {
+        'name': 'CBR Testing Machine',
+        'code': 'CBR-002',
+        'status': 'Inactive',
+        'statusColor': Colors.red,
+        'bgColor': Colors.red.shade50,
+        'icon': Icons.science,
+      },
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
-      // The parent MainScreen handles the App Bar and Bottom Nav.
-      // We use a Scaffold here solely to position the Floating Action Button.
+
+      // ============================================================
+      // BODY
+      // ============================================================
+
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Search Bar
-            _buildSearchBar(),
-            const SizedBox(height: 24),
+            // ========================================================
+            // SEARCH BAR
+            // ========================================================
 
-            // Machines List
+            _buildSearchBar(),
+
+            const SizedBox(height: 20),
+
+            // ========================================================
+            // MACHINES LIST
+            // ========================================================
+
             Expanded(
-              child: ListView(
-                children: const [
-                  MachineCard(
-                    title: 'Lathe Machine',
-                    subtitle: '(ABC-020)',
-                    isActive: true,
-                    // Placeholder icon. Replace with Image.asset() when ready.
-                    iconData: Icons.precision_manufacturing,
-                  ),
-                  SizedBox(height: 16),
-                  MachineCard(
-                    title: 'CBR Testing Machine',
-                    subtitle: '(CBR-002)',
-                    isActive: false,
-                    iconData: Icons.science,
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: machines.length,
+                itemBuilder: (context, index) {
+                  final machine = machines[index];
+
+                  return MachineCard(
+                    name: machine['name'],
+                    code: machine['code'],
+                    status: machine['status'],
+                    statusColor: machine['statusColor'],
+                    bgColor: machine['bgColor'],
+                    icon: machine['icon'],
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
-      // Floating Action Button
+
+      // ============================================================
+      // ADD MACHINE BUTTON
+      // ============================================================
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigates to Add New Machines page
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddMachineScreen()),
+            MaterialPageRoute(
+              builder: (context) => const AddMachineScreen(),
+            ),
           );
         },
-        backgroundColor: const Color(0xFF2554C7),
+        backgroundColor: const Color(0xFF1967D2),
         shape: const CircleBorder(),
         elevation: 2,
-        child: const Icon(Icons.add, color: Colors.white, size: 32),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 30,
+        ),
       ),
     );
   }
 
+  // ================================================================
+  // SEARCH BAR
+  // Same design as Reports page
+  // ================================================================
+
   Widget _buildSearchBar() {
     return TextField(
       decoration: InputDecoration(
-        hintText: 'Search machines...',
-        hintStyle: const TextStyle(color: Color(0xFF9CA3AF), fontSize: 14),
-        prefixIcon: const Icon(Icons.search, color: Color(0xFF9CA3AF)),
+        hintText: 'Search Machines...',
+        hintStyle: TextStyle(
+          color: Colors.grey.shade500,
+        ),
+        prefixIcon: Icon(
+          Icons.search,
+          color: Colors.grey.shade500,
+        ),
         filled: true,
-        fillColor: const Color(0xFFF3F4F6),
-        contentPadding: const EdgeInsets.symmetric(vertical: 14),
+        fillColor: Colors.grey.shade100,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(24.0),
+          borderRadius: BorderRadius.circular(30.0),
           borderSide: BorderSide.none,
+        ),
+        contentPadding: const EdgeInsets.symmetric(
+          vertical: 0,
         ),
       ),
     );
   }
 }
 
-// ==========================================
-// REUSABLE MACHINE CARD WIDGET
-// ==========================================
+// ==================================================================
+// MACHINE CARD
+// ==================================================================
+
 class MachineCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final bool isActive;
-  final IconData iconData;
+  final String name;
+  final String code;
+  final String status;
+  final Color statusColor;
+  final Color bgColor;
+  final IconData icon;
 
   const MachineCard({
     super.key,
-    required this.title,
-    required this.subtitle,
-    required this.isActive,
-    required this.iconData,
+    required this.name,
+    required this.code,
+    required this.status,
+    required this.statusColor,
+    required this.bgColor,
+    required this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        // Navigate to MachineDetailsScreen when tapped
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => MachineDetailsScreen(
-              title: title,
-              code: subtitle,
-              isActive: isActive,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+
+      // ============================================================
+      // SAME CARD DESIGN AS REPORTS
+      // ============================================================
+
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.grey.shade300,
+          width: 1,
+        ),
+      ),
+
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+
+          // ========================================================
+          // CARD CLICK
+          // ========================================================
+
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MachineDetailsScreen(
+                  title: name,
+                  code: code,
+                  isActive: status == 'Active',
+                ),
+              ),
+            );
+          },
+
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                // ==================================================
+                // MACHINE ICON
+                // ==================================================
+
+                Container(
+                  width: 52,
+                  height: 52,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.grey.shade300,
+                    ),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: Colors.blueGrey,
+                    size: 28,
+                  ),
+                ),
+
+                const SizedBox(width: 14),
+
+                // ==================================================
+                // MACHINE INFORMATION
+                // ==================================================
+
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        code,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // ==================================================
+                // STATUS INDICATOR
+                // Right side, next to arrow
+                // ==================================================
+
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: bgColor,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Text(
+                    status,
+                    style: TextStyle(
+                      color: statusColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                // ==================================================
+                // ARROW
+                // ==================================================
+
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.grey,
+                ),
+              ],
             ),
           ),
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(12.0),
-        decoration: BoxDecoration(
-          color: const Color(0xFFF9FAFB),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE5E7EB)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 64,
-              height: 64,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: const Color(0xFFE5E7EB)),
-              ),
-              child: Icon(iconData, size: 32, color: Colors.blueGrey),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Color(0xFF111827),
-                    ),
-                  ),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Color(0xFF111827),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      color: isActive
-                          ? Colors.green.shade100
-                          : Colors.red.shade100,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isActive
-                            ? Colors.green.shade400
-                            : Colors.red.shade400,
-                        width: 0.5,
-                      ),
-                    ),
-                    child: Text(
-                      isActive ? 'ACTIVE' : 'INACTIVE',
-                      style: TextStyle(
-                        fontSize: 10,
-                        fontWeight: FontWeight.bold,
-                        color: isActive
-                            ? Colors.green.shade700
-                            : Colors.red.shade700,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_right, color: Color(0xFF9CA3AF)),
-          ],
         ),
       ),
     );

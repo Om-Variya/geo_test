@@ -1,53 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../widgets/top_nav_bar.dart';
-import '../../widgets/bottom_nav_bar.dart';
-import '../../widgets/app_drawer.dart'; // Import your drawer file
 
-// ==========================================
-// DASHBOARD LAYOUT SHELL
-// ==========================================
-class DashboardScreen extends StatefulWidget {
-  const DashboardScreen({super.key});
-
-  @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = [
-    const DashboardBody(),
-    const Center(child: Text('Reports Page')),
-    const Center(child: Text('Machines Page')),
-    const Center(child: Text('Inventory Page')),
-    const Center(child: Text('Profile Page')),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: const TopNavBar(),
-      drawer: const AppDrawer(), // Attached the Drawer Menu Here
-      body: SafeArea(child: _pages[_selectedIndex]),
-      bottomNavigationBar: CustomBottomNavBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
-    );
-  }
-}
-
-// ==========================================
-// DASHBOARD CONTENT
-// ==========================================
 class DashboardBody extends StatelessWidget {
   const DashboardBody({super.key});
 
@@ -58,6 +10,7 @@ class DashboardBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Greeting Section
           const Text(
             'Good Morning,',
             style: TextStyle(
@@ -77,6 +30,7 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
+          // Stats Grid
           Row(
             children: [
               Expanded(
@@ -118,6 +72,7 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
+          // Quick Actions Section
           const Text(
             'Quick Actions',
             style: TextStyle(
@@ -138,6 +93,7 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
+          // Recent Reports Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -168,11 +124,15 @@ class DashboardBody extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
+
+          // Recent Report Tile
           _buildRecentReportTile(),
         ],
       ),
     );
   }
+
+  // --- Helper Methods ---
 
   Widget _buildStatCard(String count, String label, Color color) {
     return Container(
@@ -195,7 +155,7 @@ class DashboardBody extends StatelessWidget {
           Text(
             count,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: color,
             ),
@@ -204,7 +164,7 @@ class DashboardBody extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 11,
+              fontSize: 13,
               fontWeight: FontWeight.w600,
               color: Color(0xFF4B5563),
             ),
@@ -230,7 +190,7 @@ class DashboardBody extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 10,
+            fontSize: 11,
             fontWeight: FontWeight.w600,
             color: Color(0xFF111827),
           ),
@@ -254,7 +214,7 @@ class DashboardBody extends StatelessWidget {
               Text(
                 'RCC Cube Test',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF111827),
                 ),
@@ -262,7 +222,7 @@ class DashboardBody extends StatelessWidget {
               SizedBox(height: 4),
               Text(
                 'Bhavya Construction',
-                style: TextStyle(fontSize: 11, color: Color(0xFF9CA3AF)),
+                style: TextStyle(fontSize: 14, color: Color(0xFF9CA3AF)),
               ),
             ],
           ),
