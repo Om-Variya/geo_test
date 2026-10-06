@@ -1,367 +1,239 @@
 import 'package:flutter/material.dart';
 
-class TestDetailsPage extends StatefulWidget {
-  const TestDetailsPage({super.key});
+class TestDetailsScreen extends StatefulWidget {
+  const TestDetailsScreen({super.key});
 
   @override
-  State<TestDetailsPage> createState() => _TestDetailsPageState();
+  State<TestDetailsScreen> createState() => _TestDetailsScreenState();
 }
 
-class _TestDetailsPageState extends State<TestDetailsPage> {
-  String? machineType;
-  String? testType;
-
-  final TextEditingController sampleDescriptionController =
-      TextEditingController();
-
-  final TextEditingController quantityController =
-      TextEditingController();
-
-  final TextEditingController testMethodController =
-      TextEditingController();
+class _TestDetailsScreenState extends State<TestDetailsScreen> {
+  // Variables to hold dropdown selections
+  String? selectedMachineType;
+  String? selectedTestType;
 
   @override
-  void dispose() {
-    sampleDescriptionController.dispose();
-    quantityController.dispose();
-    testMethodController.dispose();
-    super.dispose();
-  }
-
-  // --------------------------------------------------
-  // Common Input Decoration
-  // --------------------------------------------------
-
-  InputDecoration inputDecoration({
-    String? hintText,
-    Widget? suffixIcon,
-  }) {
-    return InputDecoration(
-      hintText: hintText,
-      hintStyle: const TextStyle(
-        color: Color(0xFFA8AFB9),
-        fontSize: 9,
-      ),
-
-      filled: true,
-      fillColor: const Color(0xFFF0F0F0),
-
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 11,
-        vertical: 10,
-      ),
-
-      suffixIcon: suffixIcon,
-
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7),
-        borderSide: const BorderSide(
-          color: Color(0xFFADB5BF),
-          width: 1,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF2C2C2C),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-      ),
-
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(7),
-        borderSide: const BorderSide(
-          color: Color(0xFF28C653),
-          width: 1.2,
+        title: const Text(
+          'Test Details',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_none, color: Colors.white),
+            onPressed: () {},
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildDropdownField(
+                    label: 'Machine Type',
+                    hint: 'Select Type',
+                    value: selectedMachineType,
+                    items: ['Type A', 'Type B', 'Type C'],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedMachineType = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  _buildDropdownField(
+                    label: 'Test Type',
+                    hint: 'Select Type',
+                    value: selectedTestType,
+                    items: ['Test 1', 'Test 2', 'Test 3'],
+                    onChanged: (value) {
+                      setState(() {
+                        selectedTestType = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  _buildTextField(
+                    label: 'Sample Description / ID',
+                    hint: 'e.g. ABC-020',
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  _buildTextField(
+                    label: 'Quantity',
+                    hint: 'e.g. 3 Nos',
+                  ),
+                  const SizedBox(height: 16),
+                  
+                  _buildTextField(
+                    label: 'Test Method / Standard',
+                    hint: 'e.g. 516 : 1959',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          // Bottom Button Area
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF28C759), // Green button color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  elevation: 0,
+                ),
+                onPressed: () {},
+                child: const Text(
+                  'Add Another Test',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // --------------------------------------------------
-  // Label
-  // --------------------------------------------------
-
-  Widget fieldLabel(String text) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontSize: 9,
-          fontWeight: FontWeight.w500,
-          color: Color(0xFF303642),
+  // Reusable widget for TextFields
+  Widget _buildTextField({required String label, required String hint}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF555555),
+          ),
         ),
-      ),
+        const SizedBox(height: 6),
+        TextField(
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: TextStyle(
+              color: Colors.grey.shade400,
+              fontSize: 14,
+            ),
+            filled: true,
+            fillColor: Colors.grey.shade200,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 14.0,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Colors.grey.shade400,
+                width: 1,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Colors.grey.shade400,
+                width: 1,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
-  // --------------------------------------------------
-  // Dropdown
-  // --------------------------------------------------
-
-  Widget dropdownField({
+  // Reusable widget for Dropdown fields
+  Widget _buildDropdownField({
     required String label,
+    required String hint,
     required String? value,
     required List<String> items,
-    required ValueChanged<String?> onChanged,
+    required Function(String?) onChanged,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        fieldLabel(label),
-
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF555555),
+          ),
+        ),
+        const SizedBox(height: 6),
         DropdownButtonFormField<String>(
           value: value,
-
-          decoration: inputDecoration(
-            hintText: "Select Type",
+          icon: Icon(Icons.keyboard_arrow_down, color: Colors.grey.shade700),
+          decoration: InputDecoration(
+            filled: true,
+            fillColor: Colors.grey.shade200,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0, // Slightly reduced vertical padding for dropdowns
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Colors.grey.shade400,
+                width: 1,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              borderSide: BorderSide(
+                color: Colors.grey.shade400,
+                width: 1,
+              ),
+            ),
           ),
-
-          icon: const Icon(
-            Icons.keyboard_arrow_down,
-            size: 17,
-            color: Color(0xFF555D68),
+          hint: Text(
+            hint,
+            style: TextStyle(
+              color: Colors.grey.shade500,
+              fontSize: 14,
+            ),
           ),
-
-          style: const TextStyle(
-            fontSize: 9,
-            color: Color(0xFF555D68),
-          ),
-
-          dropdownColor: Colors.white,
-
           items: items.map((String item) {
             return DropdownMenuItem<String>(
               value: item,
               child: Text(item),
             );
           }).toList(),
-
           onChanged: onChanged,
         ),
       ],
-    );
-  }
-
-  // --------------------------------------------------
-  // Text Field
-  // --------------------------------------------------
-
-  Widget textField({
-    required String label,
-    required String hint,
-    required TextEditingController controller,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        fieldLabel(label),
-
-        TextField(
-          controller: controller,
-
-          style: const TextStyle(
-            fontSize: 9,
-            color: Color(0xFF555D68),
-          ),
-
-          decoration: inputDecoration(
-            hintText: hint,
-          ),
-        ),
-      ],
-    );
-  }
-
-  // --------------------------------------------------
-  // Add Another Test
-  // --------------------------------------------------
-
-  void addAnotherTest() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text(
-          "Test added successfully",
-        ),
-        backgroundColor: Color(0xFF28C653),
-      ),
-    );
-  }
-
-  // --------------------------------------------------
-  // Build
-  // --------------------------------------------------
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-
-      // ------------------------------------------------
-      // App Bar
-      // ------------------------------------------------
-
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF292929),
-        elevation: 0,
-
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 18,
-          ),
-
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-
-        title: const Text(
-          "Test Details",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.notifications_none,
-              color: Colors.white,
-              size: 17,
-            ),
-            onPressed: () {},
-          ),
-        ],
-      ),
-
-      // ------------------------------------------------
-      // Body
-      // ------------------------------------------------
-
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(
-            18,
-            17,
-            18,
-            17,
-          ),
-
-          child: Column(
-            children: [
-
-              // Scrollable form
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start,
-
-                    children: [
-
-                      // Machine Type
-                      dropdownField(
-                        label: "Machine Type",
-                        value: machineType,
-                        items: const [
-                          "Machine 1",
-                          "Machine 2",
-                          "Machine 3",
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            machineType = value;
-                          });
-                        },
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Test Type
-                      dropdownField(
-                        label: "Test Type",
-                        value: testType,
-                        items: const [
-                          "Concrete Test",
-                          "Cement Test",
-                          "Steel Test",
-                          "Soil Test",
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            testType = value;
-                          });
-                        },
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Sample Description
-                      textField(
-                        label: "Sample Description / ID",
-                        hint: "e.g. ABC-020",
-                        controller:
-                            sampleDescriptionController,
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Quantity
-                      textField(
-                        label: "Quantity",
-                        hint: "e.g. 3 Nos",
-                        controller: quantityController,
-                      ),
-
-                      const SizedBox(height: 8),
-
-                      // Test Method
-                      textField(
-                        label: "Test Method / Standard",
-                        hint: "e.g. 516 : 1959",
-                        controller: testMethodController,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-
-              // ------------------------------------------------
-              // Add Another Test Button
-              // ------------------------------------------------
-
-              SizedBox(
-                width: double.infinity,
-                height: 43,
-
-                child: ElevatedButton(
-                  onPressed: addAnotherTest,
-
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                        const Color(0xFF28C653),
-
-                    foregroundColor: Colors.white,
-
-                    elevation: 0,
-
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(7),
-                    ),
-                  ),
-
-                  child: const Text(
-                    "Add Another Test",
-                    style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
