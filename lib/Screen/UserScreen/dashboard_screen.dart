@@ -4,6 +4,8 @@ import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart'; // Import your drawer file
 import 'employees.dart'; // Import EmployeesScreen (Assuming it's in the same folder)
 import 'reports_screen.dart';
+import 'add_machine_screen.dart';
+import 'inventory.dart';
 
 // ==========================================
 // DASHBOARD LAYOUT SHELL
@@ -144,8 +146,24 @@ class DashboardBody extends StatelessWidget {
                   ),
                 );
               }),
-              _buildQuickAction(Icons.add, 'Add Machine'),
-              _buildQuickAction(Icons.inventory_2_outlined, 'Inventory'),
+              _buildQuickAction(Icons.add, 'Add Machine',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddMachineScreen(),
+                  ),
+                );
+              }),
+              _buildQuickAction(Icons.inventory_2_outlined, 'Inventory',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InventoryScreen(),
+                  ),
+                );
+              }),
               
               // UPDATED: Employees action is now clickable and navigates to the EmployeesScreen
               _buildQuickAction(
