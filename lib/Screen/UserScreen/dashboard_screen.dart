@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/UserScreen/employees.dart'; // Added import for Employees screen
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart'; // Import your drawer file
@@ -133,7 +134,19 @@ class DashboardBody extends StatelessWidget {
               _buildQuickAction(Icons.article_outlined, 'New Report'),
               _buildQuickAction(Icons.add, 'Add Machine'),
               _buildQuickAction(Icons.inventory_2_outlined, 'Inventory'),
-              _buildQuickAction(Icons.people_outline, 'Employees'),
+              _buildQuickAction(
+                Icons.people_outline, 
+                'Employees',
+                onTap: () {
+                  // Navigation to Employees Screen
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EmployeesScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(height: 32),
@@ -214,28 +227,33 @@ class DashboardBody extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAction(IconData icon, String label) {
-    return Column(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: const Color(0xFFE5E7EB),
-            borderRadius: BorderRadius.circular(12),
+  // Added onTap parameter and InkWell to make actions clickable
+  Widget _buildQuickAction(IconData icon, String label, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: const Color(0xFFE5E7EB),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: const Color(0xFF374151), size: 28),
           ),
-          child: Icon(icon, color: const Color(0xFF374151), size: 28),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 10,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF111827),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF111827),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
