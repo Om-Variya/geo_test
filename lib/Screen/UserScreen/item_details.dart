@@ -7,11 +7,19 @@ class ItemDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+
+      // ============================================================
+      // APP BAR
+      // ============================================================
+
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2C2C2C),
+        backgroundColor: const Color(0xFF222222),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -26,82 +34,127 @@ class ItemDetailsScreen extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
+            icon: const Icon(
+              Icons.notifications_none,
+              color: Colors.white,
+            ),
             onPressed: () {},
           ),
         ],
       ),
+
+      // ============================================================
+      // BODY
+      // ============================================================
+
       body: Column(
         children: [
+          // ==========================================================
+          // CONTENT
+          // ==========================================================
+
           Expanded(
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Top Item Card
+                  // ==================================================
+                  // ITEM HEADER CARD
+                  // ==================================================
+
                   Container(
-                    padding: const EdgeInsets.all(16.0),
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(color: Colors.grey.shade300),
+                      color: Colors.grey.shade100,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: Colors.grey.shade300,
+                        width: 1,
+                      ),
                     ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Image Container
+                        // ============================================
+                        // ITEM IMAGE
+                        // ============================================
+
                         Container(
-                          width: 80,
-                          height: 80,
+                          width: 70,
+                          height: 70,
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(8.0),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.grey.shade300,
+                            ),
                           ),
-                          padding: const EdgeInsets.all(8.0),
                           child: Image.asset(
                             'lib/resources/images/ultratech-cement-500x500.jpg',
                             fit: BoxFit.contain,
-                            // Fallback icon just in case the image path isn't in pubspec.yaml yet
-                            errorBuilder: (context, error, stackTrace) => 
-                                const Icon(Icons.image, color: Colors.grey, size: 40),
+                            errorBuilder: (context, error, stackTrace) {
+                              return Icon(
+                                Icons.inventory_2_outlined,
+                                color: Colors.grey.shade500,
+                                size: 32,
+                              );
+                            },
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        // Title and Badge
+
+                        const SizedBox(width: 14),
+
+                        // ============================================
+                        // ITEM INFORMATION
+                        // ============================================
+
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
+                              Text(
                                 'Cement (OPC 53 Grade)',
-                                style: TextStyle(
-                                  fontSize: 18,
+                                style: const TextStyle(
+                                  fontSize: 17,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF333333),
+                                  color: Colors.black87,
                                 ),
                               ),
+
                               const SizedBox(height: 4),
+
                               Text(
-                                'CEM-001',
+                                'CEM - 001',
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey.shade600,
                                 ),
                               ),
+
                               const SizedBox(height: 8),
+
+                              // ======================================
+                              // STOCK STATUS
+                              // ======================================
+
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 6,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: Colors.green.shade200,
-                                  borderRadius: BorderRadius.circular(20.0),
+                                  color: Colors.green.shade50,
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Text(
                                   'In Stock',
                                   style: TextStyle(
                                     color: Colors.green.shade700,
-                                    fontSize: 12,
                                     fontWeight: FontWeight.bold,
+                                    fontSize: 12,
                                   ),
                                 ),
                               ),
@@ -111,36 +164,164 @@ class ItemDetailsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   const SizedBox(height: 24),
-                  
-                  // Details List
-                  _buildDetailItem('CATEGORY', 'Construction Material'),
-                  _buildDetailItem('UNIT', 'Bag'),
-                  _buildDetailItem('CURRENT STOCK', '50 Unit'),
-                  _buildDetailItem('MINIMUM STOCK LEVEL', '20 Unit'),
-                  _buildDetailItem('STORAGE LOCATION', 'Godown - A'),
-                  _buildDetailItem('SUPPLIER', 'UltraTech Cement'),
-                  _buildDetailItem('PURCHASE DATE', '15-07-2026'),
-                  _buildDetailItem('NOTES', 'Keep in dry place.'),
+
+                  // ==================================================
+                  // ITEM INFORMATION
+                  // ==================================================
+
+                  _buildSectionHeader('ITEM INFORMATION'),
+
+                  const SizedBox(height: 16),
+
+                  _buildDetailRow(
+                    'Category',
+                    'Construction Material',
+                  ),
+
+                  _buildDetailRow(
+                    'Unit',
+                    'Bag',
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // ==================================================
+                  // STOCK DETAILS
+                  // ==================================================
+
+                  _buildSectionHeader('STOCK DETAILS'),
+
+                  const SizedBox(height: 16),
+
+                  _buildDetailRow(
+                    'Current Stock',
+                    '50',
+                  ),
+
+                  _buildDetailRow(
+                    'Minimum Stock Level',
+                    '20',
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // ==================================================
+                  // STORAGE & SUPPLIER
+                  // ==================================================
+
+                  _buildSectionHeader('STORAGE & SUPPLIER'),
+
+                  const SizedBox(height: 16),
+
+                  _buildDetailRow(
+                    'Storage Location',
+                    'Godown - A',
+                  ),
+
+                  _buildDetailRow(
+                    'Supplier',
+                    'UltraTech Cement',
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // ==================================================
+                  // PURCHASE DETAILS
+                  // ==================================================
+
+                  _buildSectionHeader('PURCHASE DETAILS'),
+
+                  const SizedBox(height: 16),
+
+                  _buildDetailRow(
+                    'Purchase Date',
+                    '15-07-2026',
+                  ),
+
+                  const SizedBox(height: 8),
+
+                  // ==================================================
+                  // DOCUMENTATION
+                  // ==================================================
+
+                  _buildSectionHeader('DOCUMENTATION'),
+
+                  const SizedBox(height: 16),
+
+                  _buildNotesBox(
+                    'Keep in dry place.',
+                  ),
+
+                  const SizedBox(height: 16),
                 ],
               ),
             ),
           ),
-          
-          // Bottom Action Buttons
+
+          // ==========================================================
+          // BOTTOM ACTION BUTTONS
+          // ==========================================================
+
           Container(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
-              border: Border(top: BorderSide(color: Colors.grey.shade200)),
+              border: Border(
+                top: BorderSide(
+                  color: Colors.grey.shade200,
+                  width: 1,
+                ),
+              ),
             ),
             child: Row(
               children: [
-                _buildActionButton('Stock In', Colors.green),
+                // ================================================
+                // STOCK IN
+                // ================================================
+
+                Expanded(
+                  child: _buildActionButton(
+                    label: 'Stock In',
+                    bgColor: Colors.green.shade50,
+                    textColor: Colors.green.shade700,
+                    borderColor: Colors.green.shade300,
+                    onTap: () {},
+                  ),
+                ),
+
                 const SizedBox(width: 12),
-                _buildActionButton('Stock Out', Colors.red),
+
+                // ================================================
+                // STOCK OUT
+                // ================================================
+
+                Expanded(
+                  child: _buildActionButton(
+                    label: 'Stock Out',
+                    bgColor: Colors.red.shade50,
+                    textColor: Colors.red.shade700,
+                    borderColor: Colors.red.shade300,
+                    onTap: () {},
+                  ),
+                ),
+
                 const SizedBox(width: 12),
-                _buildActionButton('Edit', Colors.blue),
+
+                // ================================================
+                // EDIT
+                // ================================================
+
+                Expanded(
+                  child: _buildActionButton(
+                    label: 'Edit',
+                    bgColor: Colors.amber.shade50,
+                    textColor: Colors.amber.shade900,
+                    borderColor: Colors.amber.shade300,
+                    onTap: () {},
+                  ),
+                ),
               ],
             ),
           ),
@@ -149,29 +330,73 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Reusable widget for textual details
-  Widget _buildDetailItem(String label, String value) {
+  // ================================================================
+  // SECTION HEADER
+  // Same style used in Add Machine / Site Details
+  // ================================================================
+
+  Widget _buildSectionHeader(String title) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF2554C7),
+          ),
+        ),
+        const SizedBox(height: 4),
+        const Divider(
+          color: Color(0xFFE5E7EB),
+          thickness: 1,
+        ),
+      ],
+    );
+  }
+
+  // ================================================================
+  // DETAIL ROW
+  // ================================================================
+
+  Widget _buildDetailRow(
+    String label,
+    String value,
+  ) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0),
-      child: Column(
+      padding: const EdgeInsets.only(
+        bottom: 14,
+      ),
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Colors.blueGrey.shade600,
-              letterSpacing: 0.5,
+          // LABEL
+          Expanded(
+            flex: 4,
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF6B7280),
+              ),
             ),
           ),
-          const SizedBox(height: 4),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF222222),
+
+          const SizedBox(width: 16),
+
+          // VALUE
+          Expanded(
+            flex: 6,
+            child: Text(
+              value,
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF111827),
+              ),
             ),
           ),
         ],
@@ -179,27 +404,65 @@ class ItemDetailsScreen extends StatelessWidget {
     );
   }
 
-  // Reusable widget for the bottom buttons
-  Widget _buildActionButton(String title, MaterialColor color) {
-    return Expanded(
-      child: InkWell(
-        onTap: () {},
-        borderRadius: BorderRadius.circular(8.0),
-        child: Container(
-          height: 45,
-          decoration: BoxDecoration(
-            color: color.shade100.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(8.0),
-            border: Border.all(color: color.shade300),
+  // ================================================================
+  // NOTES BOX
+  // ================================================================
+
+  Widget _buildNotesBox(String text) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF3F4F6),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: const Color(0xFFE5E7EB),
+        ),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontSize: 13,
+          color: Color(0xFF374151),
+          height: 1.4,
+        ),
+      ),
+    );
+  }
+
+  // ================================================================
+  // ACTION BUTTON
+  // Same shape and size as Machine Details
+  // ================================================================
+
+  Widget _buildActionButton({
+    required String label,
+    required Color bgColor,
+    required Color textColor,
+    required Color borderColor,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 12,
+        ),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: borderColor,
+            width: 1,
           ),
-          alignment: Alignment.center,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: color.shade700,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.bold,
+            color: textColor,
           ),
         ),
       ),

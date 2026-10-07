@@ -1,82 +1,144 @@
 import 'package:flutter/material.dart';
 import 'package:geo_test/Screen/UserScreen/item_details.dart';
+import 'package:geo_test/Screen/UserScreen/add_items.dart';
 
 class InventoryScreen extends StatelessWidget {
   const InventoryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // Notice there is no appBar or bottomNavigationBar here, 
-    // so it fits perfectly inside your MainScreen!
+    // ============================================================
+    // DUMMY INVENTORY DATA
+    // ============================================================
+
+    final List<Map<String, dynamic>> items = [
+      {
+        'title': 'Cement (OPC 53 Grade)',
+        'code': 'CEM - 001',
+        'unit': 'Bag',
+        'quantity': '50',
+        'status': 'In Stock',
+        'statusColor': Colors.green,
+        'bgColor': Colors.green.shade50,
+      },
+      {
+        'title': 'Sand (Fine)',
+        'code': 'SAN - 001',
+        'unit': 'CFT',
+        'quantity': '25',
+        'status': 'Low Stock',
+        'statusColor': Colors.orange,
+        'bgColor': Colors.orange.shade50,
+      },
+      {
+        'title': 'Cement (OPC 53 Grade)',
+        'code': 'CEM - 001',
+        'unit': 'Bag',
+        'quantity': '0',
+        'status': 'Out Of Stock',
+        'statusColor': Colors.red,
+        'bgColor': Colors.red.shade50,
+      },
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
+
+      // ============================================================
+      // BODY
+      // ============================================================
       body: Padding(
         padding: const EdgeInsets.all(16.0),
+
         child: Column(
           children: [
-            TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                hintText: 'Search Items...',
-                hintStyle: TextStyle(color: Colors.grey.shade500),
-                prefixIcon: Icon(Icons.search, color: Colors.grey.shade500),
-                contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
-                ),
-              ),
-            ),
+            // ======================================================
+            // SEARCH BAR
+            // ======================================================
+            _buildSearchBar(),
+
             const SizedBox(height: 20),
+
+            // ======================================================
+            // INVENTORY LIST
+            // ======================================================
             Expanded(
-              child: ListView(
-                children: const [
-                  InventoryCard(
-                    title: 'Cement (OPC 53 Grade)',
-                    code: 'CEM - 001',
-                    unit: 'Bag',
-                    quantity: '50',
-                    status: 'in Stock',
-                    statusColor: Colors.green,
-                  ),
-                  SizedBox(height: 12),
-                  InventoryCard(
-                    title: 'Sand (Fine)',
-                    code: 'SAN - 001',
-                    unit: 'CFT',
-                    quantity: '25',
-                    status: 'Low Stock',
-                    statusColor: Colors.orange,
-                  ),
-                  SizedBox(height: 12),
-                  InventoryCard(
-                    title: 'Cement (OPC 53 Grade)',
-                    code: 'CEM - 001',
-                    unit: 'Bag',
-                    quantity: '0',
-                    status: 'Out Of Stock',
-                    statusColor: Colors.red,
-                  ),
-                ],
+              child: ListView.builder(
+                itemCount: items.length,
+
+                itemBuilder: (context, index) {
+                  final item = items[index];
+
+                  return InventoryCard(
+                    title: item['title'],
+                    code: item['code'],
+                    unit: item['unit'],
+                    quantity: item['quantity'],
+                    status: item['status'],
+                    statusColor: item['statusColor'],
+                    bgColor: item['bgColor'],
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
+
+      // ============================================================
+      // ADD ITEM BUTTON
+      // ============================================================
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color(0xFF2956D3),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddItemsScreen()),
+          );
+        },
+
+        backgroundColor: const Color(0xFF1967D2),
+
+        // Completely round button
         shape: const CircleBorder(),
+
+        elevation: 2,
+
         child: const Icon(Icons.add, color: Colors.white, size: 30),
       ),
     );
   }
+
+  // ================================================================
+  // SEARCH BAR
+  // ================================================================
+
+  Widget _buildSearchBar() {
+    return TextField(
+      decoration: InputDecoration(
+        hintText: 'Search Items...',
+
+        hintStyle: TextStyle(color: Colors.grey.shade500),
+
+        prefixIcon: Icon(Icons.search, color: Colors.grey.shade500),
+
+        filled: true,
+
+        fillColor: Colors.grey.shade100,
+
+        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30.0),
+          borderSide: BorderSide.none,
+        ),
+      ),
+    );
+  }
 }
+
+// ==================================================================
+// REUSABLE INVENTORY CARD
+// ==================================================================
 
 class InventoryCard extends StatelessWidget {
   final String title;
@@ -85,6 +147,7 @@ class InventoryCard extends StatelessWidget {
   final String quantity;
   final String status;
   final Color statusColor;
+  final Color bgColor;
 
   const InventoryCard({
     super.key,
@@ -94,66 +157,149 @@ class InventoryCard extends StatelessWidget {
     required this.quantity,
     required this.status,
     required this.statusColor,
+    required this.bgColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      // This onTap navigates to the ItemDetailsScreen when the card is tapped
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const ItemDetailsScreen()),
-        );
-      },
-      child: Container(
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Colors.grey.shade300),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF333333)),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    code,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    'Unit : $unit',
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
-                  ),
-                ],
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+
+      decoration: BoxDecoration(
+        color: Colors.grey.shade100,
+
+        borderRadius: BorderRadius.circular(16),
+
+        border: Border.all(color: Colors.grey.shade300, width: 1),
+      ),
+
+      child: Material(
+        color: Colors.transparent,
+
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+
+          // ========================================================
+          // CARD TAP
+          // ========================================================
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const ItemDetailsScreen(),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+            );
+          },
+
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+
+            child: Row(
               children: [
-                Text(
-                  quantity,
-                  style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                // ==================================================
+                // LEFT INFORMATION
+                // ==================================================
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Item Name
+                      Text(
+                        title,
+
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.black87,
+                        ),
+                      ),
+
+                      const SizedBox(height: 4),
+
+                      // Item Code
+                      Text(
+                        code,
+
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+
+                      const SizedBox(height: 2),
+
+                      // Unit
+                      Text(
+                        'Unit: $unit',
+
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  status,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: statusColor),
+
+                const SizedBox(width: 12),
+
+                // ==================================================
+                // QUANTITY + STOCK INDICATOR
+                // ==================================================
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Quantity
+                    Text(
+                      quantity,
+
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+
+                    const SizedBox(height: 6),
+
+                    // Stock Indicator
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
+
+                      decoration: BoxDecoration(
+                        color: bgColor,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+
+                      child: Text(
+                        status,
+
+                        style: TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: statusColor,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(width: 12),
+
+                // ==================================================
+                // ARROW
+                // ==================================================
+                const Icon(
+                  Icons.arrow_forward_ios,
+                  size: 16,
+                  color: Colors.grey,
                 ),
               ],
             ),
-            const SizedBox(width: 8),
-            Icon(Icons.chevron_right, color: Colors.grey.shade400),
-          ],
+          ),
         ),
       ),
     );

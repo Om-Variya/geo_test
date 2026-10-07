@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:geo_test/Screen/UserScreen/employees.dart'; // Added import for Employees screen
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart'; // Import your drawer file
@@ -59,6 +58,7 @@ class DashboardBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // Greeting Section
           const Text(
             'Good Morning,',
             style: TextStyle(
@@ -78,6 +78,7 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
+          // Stats Grid
           Row(
             children: [
               Expanded(
@@ -119,6 +120,7 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
+          // Quick Actions Section
           const Text(
             'Quick Actions',
             style: TextStyle(
@@ -151,6 +153,7 @@ class DashboardBody extends StatelessWidget {
           ),
           const SizedBox(height: 32),
 
+          // Recent Reports Section
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -181,11 +184,15 @@ class DashboardBody extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
+
+          // Recent Report Tile
           _buildRecentReportTile(),
         ],
       ),
     );
   }
+
+  // --- Helper Methods ---
 
   Widget _buildStatCard(String count, String label, Color color) {
     return Container(
@@ -208,7 +215,7 @@ class DashboardBody extends StatelessWidget {
           Text(
             count,
             style: TextStyle(
-              fontSize: 22,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: color,
             ),
@@ -217,7 +224,7 @@ class DashboardBody extends StatelessWidget {
           Text(
             label,
             style: const TextStyle(
-              fontSize: 11,
+              fontSize: 13,
               fontWeight: FontWeight.w600,
               color: Color(0xFF4B5563),
             ),
@@ -227,33 +234,28 @@ class DashboardBody extends StatelessWidget {
     );
   }
 
-  // Added onTap parameter and InkWell to make actions clickable
-  Widget _buildQuickAction(IconData icon, String label, {VoidCallback? onTap}) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Column(
-        children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: const Color(0xFFE5E7EB),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Icon(icon, color: const Color(0xFF374151), size: 28),
+  Widget _buildQuickAction(IconData icon, String label) {
+    return Column(
+      children: [
+        Container(
+          width: 60,
+          height: 60,
+          decoration: BoxDecoration(
+            color: const Color(0xFFE5E7EB),
+            borderRadius: BorderRadius.circular(12),
           ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF111827),
-            ),
+          child: Icon(icon, color: const Color(0xFF374151), size: 28),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          label,
+          style: const TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF111827),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -272,7 +274,7 @@ class DashboardBody extends StatelessWidget {
               Text(
                 'RCC Cube Test',
                 style: TextStyle(
-                  fontSize: 14,
+                  fontSize: 17,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF111827),
                 ),
@@ -280,7 +282,7 @@ class DashboardBody extends StatelessWidget {
               SizedBox(height: 4),
               Text(
                 'Bhavya Construction',
-                style: TextStyle(fontSize: 11, color: Color(0xFF9CA3AF)),
+                style: TextStyle(fontSize: 14, color: Color(0xFF9CA3AF)),
               ),
             ],
           ),
