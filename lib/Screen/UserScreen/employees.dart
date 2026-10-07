@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/UserScreen/add_employees.dart';
 
 class EmployeesScreen extends StatelessWidget {
   const EmployeesScreen({super.key});
@@ -81,7 +82,7 @@ class EmployeesScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 EmployeeCard(
-                  name: '', // Empty name handled gracefully for the 4th card
+                  name: 'Mraval', // Empty name handled gracefully for the 4th card
                   role: 'Lab Operator',
                   eid: 'OPT-001',
                 ),
@@ -92,7 +93,12 @@ class EmployeesScreen extends StatelessWidget {
       ),
       // Floating Action Button
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddEmployeeScreen()),
+          );
+        },
         backgroundColor: const Color(0xFF2956D3),
         shape: const CircleBorder(),
         elevation: 2,
