@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geo_test/Screen/AuthScreen/login.dart';
+import 'package:geo_test/Screen/UserScreen/reports_screen.dart';
+import 'package:geo_test/Screen/UserScreen/machines_screen.dart';
+import 'package:geo_test/Screen/UserScreen/inventory.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -57,16 +60,22 @@ class AppDrawer extends StatelessWidget {
                 _buildMenuItem(Icons.dashboard_outlined, 'Dashboard', () {
                   Navigator.pop(context); // Closes the drawer
                 }),
-                _buildMenuItem(Icons.article_outlined, 'My Reports', () {}),
+                _buildMenuItem(Icons.article_outlined, 'My Reports', () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportsScreen()));
+                }),
                 _buildMenuItem(
                   Icons.precision_manufacturing_outlined,
                   'Machine Status',
-                  () {},
+                  () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const MachinesScreen()));
+                  }
                 ),
                 _buildMenuItem(
                   Icons.inventory_2_outlined,
                   'Inventory Management',
-                  () {},
+                  () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const InventoryScreen()));
+                  },
                 ),
                 const Padding(
                   padding: EdgeInsets.symmetric(

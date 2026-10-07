@@ -1,5 +1,57 @@
 import 'package:flutter/material.dart';
+import '../../widgets/top_nav_bar.dart';
+import '../../widgets/bottom_nav_bar.dart';
+import '../../widgets/app_drawer.dart'; // Import your drawer file
+import 'employees.dart'; // Import EmployeesScreen (Assuming it's in the same folder)
+import 'reports_screen.dart';
+import 'add_machine_screen.dart';
+import 'inventory.dart';
 
+// ==========================================
+// DASHBOARD LAYOUT SHELL
+// ==========================================
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  int _selectedIndex = 0;
+
+  final List<Widget> _pages = [
+    const DashboardBody(),
+    const Center(child: Text('Reports Page')),
+    const Center(child: Text('Machines Page')),
+    const Center(child: Text('Inventory Page')),
+    const Center(child: Text('Profile Page')),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: const TopNavBar(),
+      drawer: const AppDrawer(), // Attached the Drawer Menu Here
+      body: SafeArea(child: _pages[_selectedIndex]),
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
+    );
+  }
+}
+
+// ==========================================
+// DASHBOARD CONTENT
+// ==========================================
 class DashboardBody extends StatelessWidget {
   const DashboardBody({super.key});
 
@@ -85,10 +137,47 @@ class DashboardBody extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildQuickAction(Icons.article_outlined, 'New Report'),
-              _buildQuickAction(Icons.add, 'Add Machine'),
-              _buildQuickAction(Icons.inventory_2_outlined, 'Inventory'),
-              _buildQuickAction(Icons.people_outline, 'Employees'),
+              _buildQuickAction(Icons.article_outlined, 'New Report',
+                  onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReportsScreen(),
+                  ),
+                );
+              }),
+              _buildQuickAction(Icons.add, 'Add Machine',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddMachineScreen(),
+                  ),
+                );
+              }),
+              _buildQuickAction(Icons.inventory_2_outlined, 'Inventory',
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const InventoryScreen(),
+                  ),
+                );
+              }),
+              
+              // UPDATED: Employees action is now clickable and navigates to the EmployeesScreen
+              _buildQuickAction(
+                Icons.people_outline, 
+                'Employees',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const EmployeesScreen(),
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(height: 32),
@@ -174,28 +263,33 @@ class DashboardBody extends StatelessWidget {
     );
   }
 
-  Widget _buildQuickAction(IconData icon, String label) {
-    return Column(
-      children: [
-        Container(
-          width: 60,
-          height: 60,
-          decoration: BoxDecoration(
-            color: const Color(0xFFE5E7EB),
-            borderRadius: BorderRadius.circular(12),
+  // UPDATED: Added onTap parameter and InkWell so the button registers clicks
+  Widget _buildQuickAction(IconData icon, String label, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Column(
+        children: [
+          Container(
+            width: 60,
+            height: 60,
+            decoration: BoxDecoration(
+              color: const Color(0xFFE5E7EB),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: const Color(0xFF374151), size: 28),
           ),
-          child: Icon(icon, color: const Color(0xFF374151), size: 28),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 11,
-            fontWeight: FontWeight.w600,
-            color: Color(0xFF111827),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF111827),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
