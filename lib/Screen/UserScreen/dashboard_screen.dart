@@ -3,7 +3,7 @@ import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart'; // Import your drawer file
 import 'employees.dart'; // Import EmployeesScreen (Assuming it's in the same folder)
-
+import 'reports_screen.dart';
 
 // ==========================================
 // DASHBOARD LAYOUT SHELL
@@ -135,7 +135,15 @@ class DashboardBody extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildQuickAction(Icons.article_outlined, 'New Report'),
+              _buildQuickAction(Icons.article_outlined, 'New Report',
+                  onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ReportsScreen(),
+                  ),
+                );
+              }),
               _buildQuickAction(Icons.add, 'Add Machine'),
               _buildQuickAction(Icons.inventory_2_outlined, 'Inventory'),
               
