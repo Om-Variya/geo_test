@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/AuthScreen/login.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -45,6 +46,10 @@ class ProfileScreen extends StatelessWidget {
             // Log Out Button
             InkWell(
               onTap: () {
+                Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const Loginscreen()),
+          );
                 // Add logout logic here
               },
               borderRadius: BorderRadius.circular(8.0),

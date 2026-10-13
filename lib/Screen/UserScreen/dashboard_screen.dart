@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/UserScreen/add_items.dart';
+import 'package:geo_test/Screen/UserScreen/site_details.dart';
 import '../../widgets/top_nav_bar.dart';
 import '../../widgets/bottom_nav_bar.dart';
 import '../../widgets/app_drawer.dart'; // Import your drawer file
@@ -142,7 +144,7 @@ class DashboardBody extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const ReportsScreen(),
+                    builder: (context) => const SiteDetailsScreen(),
                   ),
                 );
               }),
@@ -155,12 +157,12 @@ class DashboardBody extends StatelessWidget {
                   ),
                 );
               }),
-              _buildQuickAction(Icons.inventory_2_outlined, 'Inventory',
+              _buildQuickAction(Icons.inventory_2_outlined, 'Add Item',
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const InventoryScreen(),
+                    builder: (context) => const AddItemsScreen(),
                   ),
                 );
               }),
