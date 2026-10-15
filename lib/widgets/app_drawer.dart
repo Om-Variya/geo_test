@@ -84,8 +84,6 @@ class AppDrawer extends StatelessWidget {
                   ),
                   child: Divider(color: Color(0xFFF3F4F6), thickness: 1),
                 ),
-                _buildMenuItem(Icons.settings_outlined, 'Settings', () {}),
-                _buildMenuItem(Icons.help_outline, 'Help & Support', () {}),
               ],
             ),
           ),
