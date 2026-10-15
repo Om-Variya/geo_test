@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geo_test/Screen/AuthScreen/login.dart';
+import 'package:geo_test/Screen/UserScreen/edit_profile.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -22,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            
+
             // User Name
             const Text(
               'Om Variya',
@@ -33,32 +34,40 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 40),
-            
+
             // Settings Options
-            _buildSettingsOption('Edit Profile', onTap: () {}),
+            _buildSettingsOption('Edit Profile', onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditProfileScreen(),
+                ),
+              );
+            }),
             _buildSettingsOption('About App', onTap: () {}),
             _buildSettingsOption('Notifications', onTap: () {}),
             _buildSettingsOption('Privacy Policy', onTap: () {}),
             _buildSettingsOption('Terms & Conditions', onTap: () {}),
-            
+
             const SizedBox(height: 40),
-            
+
             // Log Out Button
             InkWell(
               onTap: () {
                 Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => const Loginscreen()),
-          );
+                  context,
+                  MaterialPageRoute(builder: (context) => const Loginscreen()),
+                );
                 // Add logout logic here
               },
               borderRadius: BorderRadius.circular(8.0),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 12.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 40.0, vertical: 12.0),
                 decoration: BoxDecoration(
                   color: Colors.red.shade100.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.red.shade300, width: 1.5),
+                  border: Border.all(color: Colors.red.shade300, width: 0.8),
                 ),
                 child: Text(
                   'Log Out',

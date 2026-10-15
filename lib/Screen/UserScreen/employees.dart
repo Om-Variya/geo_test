@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/UserScreen/add_employees.dart';
+import 'package:geo_test/Screen/UserScreen/employee_details.dart';
 import 'package:geo_test/widgets/app_drawer.dart';
 import 'package:geo_test/widgets/top_nav_bar.dart';
 
@@ -9,7 +11,7 @@ class EmployeesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> employees = [
       {
-        'name': 'Rajesh Patel',
+        'name': 'Om Vaiya',
         'id': 'EMP-001',
         'role': 'Site Engineer',
         'status': 'Active',
@@ -17,7 +19,7 @@ class EmployeesScreen extends StatelessWidget {
         'bgColor': Colors.green.shade50,
       },
       {
-        'name': 'Amit Shah',
+        'name': 'Rudra Braiya',
         'id': 'EMP-002',
         'role': 'Lab Technician',
         'status': 'Active',
@@ -25,7 +27,7 @@ class EmployeesScreen extends StatelessWidget {
         'bgColor': Colors.green.shade50,
       },
       {
-        'name': 'Karan Joshi',
+        'name': 'Digvijayssinh Vaghela',
         'id': 'EMP-003',
         'role': 'Testing Engineer',
         'status': 'Inactive',
@@ -33,7 +35,7 @@ class EmployeesScreen extends StatelessWidget {
         'bgColor': Colors.red.shade50,
       },
       {
-        'name': 'Priya Mehta',
+        'name': 'MRaval',
         'id': 'EMP-004',
         'role': 'Quality Engineer',
         'status': 'Active',
@@ -44,7 +46,7 @@ class EmployeesScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-appBar: const TopNavBar(),
+      appBar: const TopNavBar(),
       drawer: const AppDrawer(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -101,7 +103,17 @@ appBar: const TopNavBar(),
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
                         onTap: () {
-                          // Employee details page
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EmployeeDetailsScreen(
+                                name: employee['name'],
+                                id: employee['id'],
+                                role: employee['role'],
+                                isActive: employee['status'] == 'Active',
+                              ),
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
@@ -254,6 +266,12 @@ appBar: const TopNavBar(),
         padding: const EdgeInsets.only(bottom: 43.0),
         child: FloatingActionButton(
           onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddEmployeeScreen(),
+              ),
+            );
             // Add Employee navigation
           },
           backgroundColor: const Color(0xFF1967D2),

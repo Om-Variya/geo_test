@@ -51,10 +51,9 @@ class _LoginscreenState extends State<Loginscreen> {
                             decoration: const BoxDecoration(
                               color: Color.fromARGB(255, 248, 250, 255),
                               shape: BoxShape.circle,
-                              
                             ),
                             child: Image.asset(
-                              'lib/resources/images/GeoTest-logo.png',
+                              'lib/resources/images/app_icon.png',
                               fit: BoxFit.contain,
                             ),
                           ),

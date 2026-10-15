@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geo_test/Screen/UserScreen/report_details.dart';
 import 'site_details.dart';
 import 'test_details.dart';
 
@@ -76,7 +77,24 @@ class ReportsScreen extends StatelessWidget {
                       child: InkWell(
                         borderRadius: BorderRadius.circular(16),
                         // Tapping the main card navigates to Site Details
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ReportDetailsScreen(
+                                title: 'Concrete Strength Test',
+                                code: 'RPT-001',
+                                siteName: 'ABC Construction Site',
+                                testType: 'Compressive Strength Test',
+                                reportDate: '14 Oct 2026',
+                                status: 'Completed',
+                                result: 'Sample result: 35 MPa',
+                                notes:
+                                    'All test procedures completed successfully.',
+                              ),
+                            ),
+                          );
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Row(

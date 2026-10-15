@@ -8,12 +8,12 @@ class AddEmployeeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color(0xFF2C2C2C),
+        backgroundColor: const Color(0xFF222222),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // Go back to Employees screen
+            Navigator.pop(context);
           },
         ),
         title: const Text(
@@ -27,13 +27,16 @@ class AddEmployeeScreen extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white),
+            icon: const Icon(
+              Icons.notifications_none,
+              color: Colors.white,
+            ),
             onPressed: () {},
           ),
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -45,14 +48,17 @@ class AddEmployeeScreen extends StatelessWidget {
                     width: 100,
                     height: 100,
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
+                      color: const Color(0xFFF3F4F6),
                       shape: BoxShape.circle,
-                      border: Border.all(color: Colors.grey.shade300, width: 2),
+                      border: Border.all(
+                        color: const Color(0xFFE5E7EB),
+                        width: 2,
+                      ),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.person,
                       size: 60,
-                      color: Colors.grey.shade500,
+                      color: Color(0xFF9CA3AF),
                     ),
                   ),
                   Positioned(
@@ -61,7 +67,7 @@ class AddEmployeeScreen extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(6),
                       decoration: const BoxDecoration(
-                        color: Color(0xFF2956D3), // Matching Blue
+                        color: Color(0xFF2554C7),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(
@@ -112,23 +118,23 @@ class AddEmployeeScreen extends StatelessWidget {
               icon: Icons.email_outlined,
               keyboardType: TextInputType.emailAddress,
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 32),
 
             // Save Button
             SizedBox(
               width: double.infinity,
-              height: 52,
+              height: 50,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2956D3), // Same blue as the FAB and bottom bar
+                  backgroundColor: const Color(0xFF10B981),
+                  foregroundColor: Colors.white,
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  elevation: 2,
                 ),
                 onPressed: () {
-                  // Add save logic here
-                  Navigator.pop(context); // Return after saving
+                  Navigator.pop(context);
                 },
                 child: const Text(
                   'Save Employee',
@@ -146,7 +152,7 @@ class AddEmployeeScreen extends StatelessWidget {
     );
   }
 
-  // Reusable text field widget styled to match your forms and search bar
+  // Reusable text field styled like Add Machine
   Widget _buildLabeledTextField({
     required String label,
     required String hint,
@@ -159,38 +165,45 @@ class AddEmployeeScreen extends StatelessWidget {
         Text(
           label,
           style: const TextStyle(
-            fontSize: 13,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF555555),
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF374151),
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
         TextField(
           keyboardType: keyboardType,
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: TextStyle(
-              color: Colors.grey.shade400,
-              fontSize: 14,
+            hintStyle: const TextStyle(
+              color: Color(0xFF9CA3AF),
+              fontSize: 13,
             ),
-            prefixIcon: Icon(icon, color: Colors.grey.shade500, size: 22),
+            prefixIcon: Icon(
+              icon,
+              color: const Color(0xFF6B7280),
+              size: 20,
+            ),
             filled: true,
-            fillColor: Colors.grey.shade100, // Matches the search bar background
+            fillColor: const Color(0xFFF3F4F6),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16.0,
-              vertical: 16.0,
+              horizontal: 16,
+              vertical: 14,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0),
-              borderSide: const BorderSide(color: Color(0xFF2956D3), width: 1.5),
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(
+                color: Color(0xFF2554C7),
+                width: 1.5,
+              ),
             ),
           ),
         ),
